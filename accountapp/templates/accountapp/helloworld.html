@@ -12,14 +12,30 @@
     }
 </style>
 
-<div style="height: 20rem; background-color:#38df81; border-radius:1rem; margin:2rem;">
-<h1>test</h1>
+<div style="border-radius:1rem; margin:2rem; text-align:center;">
+    <h1 style="font-family: 'Playfair Display', serif;">
+        Helloworld list!
+    </h1>
 
-<div class="testing" style="display:block ;">block</div>
-<div class="testing" style="display:inline;">inline</div>
-<div class="testing" style="display:None;">None</div>
-<div class="testing" style="display:inline-block;">block</div>
-<div class="testing">default</div>
+    <form action="/account/helloworld/" method="post">
+        {% csrf_token %}
+        <div>
+            <input type="text" name="helloworld_input">
+        </div>
+        <div>
+            <input type="submit" class="btn btn-primary" value="POST">
+
+        </div>
+
+    </form>
+    {% if helloworld_list %}
+        {% for hello_world in helloworld_list %}
+        <h4>
+            {{hello_world.text}}
+        </h4>
+        {% endfor %}
+    {% endif %}
+
 
 </div>
 
