@@ -1,7 +1,10 @@
 from django.http import HttpResponse,HttpResponseRedirect
+from django.contrib.auth.models import User
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from accountapp.models import Helloworld
+from django.views.generic import CreateView
+from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 def helloworld(request):
@@ -23,5 +26,14 @@ def helloworld(request):
         # return render(request,'accountapp/helloworld.html',context={'helloworld_list':helloworld_list})
         return HttpResponseRedirect(reverse('accountapp:helloworld'))
     else:
-        helloworld_list=Helloworld.objects.all()
+        # helloworld_list=Helloworld.objects.all()
         return render(request,'accountapp/helloworld.html',context={'helloworld_list':helloworld_list})
+
+class AccountCreateView(CreateView):
+    model=User
+    form_class= UserCreationForm
+    #계정생성에 성공했을 경우 어느 경로로 다시 연결할건지 설정
+    success_url=reverse_lazy('accountapp:helloworld')
+    #회원가입 화면 html 지정
+    template_name='accountapp/create.html'
+
